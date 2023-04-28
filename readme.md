@@ -53,5 +53,5 @@ e.g datasets/my_dataset.txt. If the file already exists, it will append to the f
 
 # Setup
 
-pip3 install -r requirements.txt
-export OPENAI_API_KEY=*yourkey*
+        pip3 install -r requirements.txt
+        export OPENAI_API_KEY=*yourkey*
