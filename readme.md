@@ -23,7 +23,7 @@ prompt to create the outcome you are looking for.
 
 # Usage
 
-python main.py *'outfile'* *'prompt'* *datacounter*
+    python main.py *'outfile'* *'prompt'* *datacounter*
 
 **outfile** ~ my_dataset
 > The file containing the data
