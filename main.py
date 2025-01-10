@@ -1,11 +1,7 @@
-from setup import datasets, prompt, parser
-from langchain_openai import OpenAI
+from setup import datasets, prompt, parser, blacklist, quantity, model
 from utils import clean, lint, create_dataset_file, write
 
 running_list = []
-blacklist = []
-quantity = 100
-model = OpenAI(model_name="gpt-3.5-turbo-instruct", temperature=1.0)
 
 prompt_and_model = prompt | model
 
@@ -37,14 +33,16 @@ def generate_item(item):
         create_dataset_file(outfile)
 
     for i in range(quantity):
-        try:
-            print(f"Generating {i+1}/{quantity} for {outfile}")
-            output=invoke(prompt)
-            print(f"Generated: {output}")
-            write(output, outfile)
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            i -= 1 # retry the current iteration
+        def generate():
+            try:
+                print(f"Generating {i+1}/{quantity} for {outfile}")
+                output=invoke(prompt)
+                print(f"Generated: {output}")
+                write(output, outfile)
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                generate()
+        generate()
 
 def main():
     for item in datasets:
